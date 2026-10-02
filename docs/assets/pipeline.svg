@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" font-family="'PingFang SC','Microsoft YaHei','Noto Sans CJK SC','Source Han Sans SC','WenQuanYi Micro Hei',sans-serif">
+<title>Fridge Mind RKNN 流程：主机训练 → RK3566 板端离线识别与库存 → 界面、语音与可选云端助手</title>
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b4a5c"/></marker>
+<marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c26a12"/></marker>
+</defs>
+<rect width="1200" height="600" rx="14" fill="#ffffff"/>
+<rect x="16" y="16" width="1168" height="122" rx="12" fill="#f5f7fa" stroke="#d9e2ec"/>
+<text x="32" y="38" font-size="13" font-weight="700" fill="#3b4a5c">主机训练与转换 · Host</text>
+<rect x="40" y="52" width="190" height="66" rx="9" fill="#ffffff" stroke="#3b4a5c" stroke-width="1.4"/>
+<text x="135.0" y="78" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">自建数据集</text>
+<text x="135.0" y="97" font-size="11.5" fill="#52606d" text-anchor="middle">6 类 · YOLO 标注</text>
+<text x="135.0" y="112" font-size="11.5" fill="#52606d" text-anchor="middle">含负样本空标注</text>
+<rect x="270" y="52" width="190" height="66" rx="9" fill="#ffffff" stroke="#3b4a5c" stroke-width="1.4"/>
+<text x="365.0" y="78" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">YOLOv5n 训练</text>
+<text x="365.0" y="97" font-size="11.5" fill="#52606d" text-anchor="middle">416 输入 · 100 轮</text>
+<text x="365.0" y="112" font-size="11.5" fill="#52606d" text-anchor="middle">batch 16 · SGD</text>
+<rect x="500" y="52" width="190" height="66" rx="9" fill="#ffffff" stroke="#3b4a5c" stroke-width="1.4"/>
+<text x="595.0" y="78" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">ONNX 导出</text>
+<text x="595.0" y="97" font-size="11.5" fill="#52606d" text-anchor="middle">opset 12 · batch 1</text>
+<text x="595.0" y="112" font-size="11.5" fill="#52606d" text-anchor="middle">输出 [1, N, 11]</text>
+<rect x="730" y="52" width="190" height="66" rx="9" fill="#ffffff" stroke="#3b4a5c" stroke-width="1.4"/>
+<text x="825.0" y="78" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">RKNN 转换</text>
+<text x="825.0" y="97" font-size="11.5" fill="#52606d" text-anchor="middle">RKNN-Toolkit2</text>
+<text x="825.0" y="112" font-size="11.5" fill="#52606d" text-anchor="middle">target rk3566</text>
+<rect x="960" y="52" width="190" height="66" rx="9" fill="#ffffff" stroke="#3b4a5c" stroke-width="1.4"/>
+<text x="1055.0" y="78" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">部署模型</text>
+<text x="1055.0" y="97" font-size="11.5" fill="#52606d" text-anchor="middle">best_fp.rknn（默认）</text>
+<text x="1055.0" y="112" font-size="11.5" fill="#52606d" text-anchor="middle">best.rknn（INT8 可选）</text>
+<path d="M230 85 H267" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M460 85 H497" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M690 85 H727" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M920 85 H957" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="16" y="156" width="1168" height="236" rx="12" fill="#eef4ff" stroke="#bfd3fb"/>
+<text x="32" y="178" font-size="13" font-weight="700" fill="#3b4a5c">RK3566 板端 · 离线运行</text>
+<rect x="40" y="192" width="190" height="66" rx="9" fill="#ffffff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="135.0" y="218" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">摄像头采集</text>
+<text x="135.0" y="237" font-size="11.5" fill="#52606d" text-anchor="middle">/dev/video18（可配置）</text>
+<text x="135.0" y="252" font-size="11.5" fill="#52606d" text-anchor="middle">640×480 · MJPG</text>
+<circle cx="54" cy="206" r="9" fill="#2563eb"/><text x="54" y="210" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+<rect x="270" y="192" width="190" height="66" rx="9" fill="#ffffff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="365.0" y="218" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">画面质量评估</text>
+<text x="365.0" y="237" font-size="11.5" fill="#52606d" text-anchor="middle">暗光 / 低对比 / 模糊</text>
+<text x="365.0" y="252" font-size="11.5" fill="#52606d" text-anchor="middle">→ 冻结本轮库存更新</text>
+<circle cx="284" cy="206" r="9" fill="#2563eb"/><text x="284" y="210" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+<rect x="500" y="192" width="190" height="66" rx="9" fill="#ffffff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="595.0" y="218" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">推理前增强</text>
+<text x="595.0" y="237" font-size="11.5" fill="#52606d" text-anchor="middle">塑料膜去反光 · CLAHE</text>
+<text x="595.0" y="252" font-size="11.5" fill="#52606d" text-anchor="middle">仅作用于送入模型的图</text>
+<circle cx="514" cy="206" r="9" fill="#2563eb"/><text x="514" y="210" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+<rect x="730" y="192" width="190" height="66" rx="9" fill="#ffffff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="825.0" y="218" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">NPU 推理</text>
+<text x="825.0" y="237" font-size="11.5" fill="#52606d" text-anchor="middle">RKNNLite · RGB uint8</text>
+<text x="825.0" y="252" font-size="11.5" fill="#52606d" text-anchor="middle">416 letterbox</text>
+<circle cx="744" cy="206" r="9" fill="#2563eb"/><text x="744" y="210" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+<rect x="960" y="192" width="190" height="66" rx="9" fill="#ffffff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="1055.0" y="218" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">后处理</text>
+<text x="1055.0" y="237" font-size="11.5" fill="#52606d" text-anchor="middle">置信度 0.25 · NMS 0.45</text>
+<text x="1055.0" y="252" font-size="11.5" fill="#52606d" text-anchor="middle">牛奶/可乐歧义过滤</text>
+<circle cx="974" cy="206" r="9" fill="#2563eb"/><text x="974" y="210" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+<path d="M230 225 H267" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M460 225 H497" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M690 225 H727" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M920 225 H957" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M1055 118 V146 H825 V189" fill="none" stroke="#3b4a5c" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<text x="980" y="140" font-size="11" fill="#52606d" text-anchor="middle">部署到板端 model/</text>
+<rect x="960" y="304" width="190" height="66" rx="9" fill="#ffffff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="1055.0" y="330" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">蓝莓盒计量</text>
+<text x="1055.0" y="349" font-size="11.5" fill="#52606d" text-anchor="middle">ROI 暗色/蓝紫面积比</text>
+<text x="1055.0" y="364" font-size="11.5" fill="#52606d" text-anchor="middle">整盒 1 · 半盒 0.5 · 空 0</text>
+<circle cx="974" cy="318" r="9" fill="#2563eb"/><text x="974" y="322" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">6</text>
+<rect x="730" y="304" width="190" height="66" rx="9" fill="#ffffff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="825.0" y="330" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">多帧稳定计数</text>
+<text x="825.0" y="349" font-size="11.5" fill="#52606d" text-anchor="middle">最近 10 次推理</text>
+<text x="825.0" y="364" font-size="11.5" fill="#52606d" text-anchor="middle">同一计数 ≥ 7 票才采纳</text>
+<circle cx="744" cy="318" r="9" fill="#2563eb"/><text x="744" y="322" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">7</text>
+<rect x="500" y="304" width="190" height="66" rx="9" fill="#ffffff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="595.0" y="330" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">SQLite 库存</text>
+<text x="595.0" y="349" font-size="11.5" fill="#52606d" text-anchor="middle">比较差值 → 入库/出库事件</text>
+<text x="595.0" y="364" font-size="11.5" fill="#52606d" text-anchor="middle">库存·事件·标签·提醒</text>
+<circle cx="514" cy="318" r="9" fill="#2563eb"/><text x="514" y="322" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">8</text>
+<rect x="270" y="304" width="190" height="66" rx="9" fill="#ffffff" stroke="#7c8b9c" stroke-width="1.4"/>
+<text x="365.0" y="330" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">包装信息建档</text>
+<text x="365.0" y="349" font-size="11.5" fill="#52606d" text-anchor="middle">牛奶 / 可乐 · 拍照留档</text>
+<text x="365.0" y="364" font-size="11.5" fill="#52606d" text-anchor="middle">保质期与营养信息</text>
+<rect x="40" y="304" width="190" height="66" rx="9" fill="#ffffff" stroke="#7c8b9c" stroke-width="1.4"/>
+<text x="135.0" y="330" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">按键 / 触控</text>
+<text x="135.0" y="349" font-size="11.5" fill="#52606d" text-anchor="middle">1–5 切页 · I 初始化</text>
+<text x="135.0" y="364" font-size="11.5" fill="#52606d" text-anchor="middle">Z 清空 · C/S 标签 · Q 退出</text>
+<path d="M1055 258 V301" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M960 337 H923" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M730 337 H693" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M460 337 H497" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M230 337 H267" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="16" y="410" width="1168" height="138" rx="12" fill="#fffaf2" stroke="#f3d9b1"/>
+<text x="470" y="432" font-size="13" font-weight="700" fill="#3b4a5c">交互与输出 · 云端助手为联网可选</text>
+<rect x="40" y="446" width="190" height="66" rx="9" fill="#ffffff" stroke="#3b4a5c" stroke-width="1.4"/>
+<text x="135.0" y="472" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">五页 OpenCV 界面</text>
+<text x="135.0" y="491" font-size="11.5" fill="#52606d" text-anchor="middle">识别 · 库存 · 标签</text>
+<text x="135.0" y="506" font-size="11.5" fill="#52606d" text-anchor="middle">事件 · 助手</text>
+<rect x="270" y="446" width="190" height="66" rx="9" fill="#ffffff" stroke="#3b4a5c" stroke-width="1.4"/>
+<text x="365.0" y="472" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">语音播报</text>
+<text x="365.0" y="491" font-size="11.5" fill="#52606d" text-anchor="middle">固定 WAV 提示优先</text>
+<text x="365.0" y="506" font-size="11.5" fill="#52606d" text-anchor="middle">espeak-ng 动态播报兜底</text>
+<rect x="730" y="446" width="190" height="66" rx="9" fill="#ffffff" stroke="#c26a12" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="825.0" y="472" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">云端大模型助手</text>
+<text x="825.0" y="491" font-size="11.5" fill="#52606d" text-anchor="middle">库存 JSON + 近期事件</text>
+<text x="825.0" y="506" font-size="11.5" fill="#52606d" text-anchor="middle">OpenAI 兼容 Chat 接口</text>
+<rect x="960" y="446" width="190" height="66" rx="9" fill="#ffffff" stroke="#c26a12" stroke-width="1.4"/>
+<text x="1055.0" y="472" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle">本地规则建议</text>
+<text x="1055.0" y="491" font-size="11.5" fill="#52606d" text-anchor="middle">云端未配置或失败时</text>
+<text x="1055.0" y="506" font-size="11.5" fill="#52606d" text-anchor="middle">按保质天数生成建议</text>
+<path d="M565 370 V398 H135 V443" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M595 370 V404 H365 V443" fill="none" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M625 370 V398 H825 V443" fill="none" stroke="#c26a12" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#c)"/>
+<text x="833" y="436" font-size="11" fill="#c26a12" text-anchor="start">库存变化 / 云分析 / 语音提问</text>
+<path d="M920 479 H957" fill="none" stroke="#c26a12" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#c)"/>
+<text x="940.0" y="472" font-size="11" fill="#c26a12" text-anchor="middle">回退</text>
+<line x1="40" y1="575" x2="78" y2="575" stroke="#3b4a5c" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="86" y="579" font-size="11" fill="#52606d" text-anchor="start">板端本地数据流（不依赖网络）</text>
+<line x1="330" y1="575" x2="368" y2="575" stroke="#c26a12" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#c)"/>
+<text x="376" y="579" font-size="11" fill="#52606d" text-anchor="start">联网可选：只上传库存与事件文本，不上传图像</text>
+<circle cx="720" cy="575" r="9" fill="#2563eb"/><text x="720" y="579" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+<text x="736" y="579" font-size="11" fill="#52606d" text-anchor="start">识别主链路步骤编号</text>
+</svg>

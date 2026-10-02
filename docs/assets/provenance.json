@@ -1,0 +1,138 @@
+{
+  "note": "展示素材来自上层归档答辩PPT images。界面是历史演示；硬件为3D渲染。训练数字只从当前仓库100轮实验CSV最后一行读取，不采用论文中不一致的数值。",
+  "assets": [
+    {
+      "file": "docs/assets/pipeline.svg",
+      "source": "新绘制（2026-10-02），依据 edge/app/camera_inventory_ui_demo.py、edge/config/fridge_demo_config.json 与 training/tools/*.py",
+      "description": "README 总体流程图；替代归档 system-architecture.png（其标注 RKNN INT8，与代码默认优先 best_fp.rknn 不符，README 未使用）"
+    },
+    {
+      "file": "docs/assets/hardware-render.jpg",
+      "source": "文档/04-成果制作/答辩PPT/fridge_defense_ppt169_20260616/images/fig_fridge3d.png",
+      "source_size": [
+        1401,
+        1123
+      ],
+      "output_size": [
+        1401,
+        1123
+      ],
+      "description": "硬件概念渲染图，不是实物照片"
+    },
+    {
+      "file": "docs/assets/recognition.jpg",
+      "source": "文档/04-成果制作/答辩PPT/fridge_defense_ppt169_20260616/images/fig_ui_detect.png",
+      "source_size": [
+        800,
+        480
+      ],
+      "output_size": [
+        800,
+        480
+      ],
+      "description": "归档演示界面截图；不代表当前代码重新运行结果"
+    },
+    {
+      "file": "docs/assets/inventory.jpg",
+      "source": "文档/04-成果制作/答辩PPT/fridge_defense_ppt169_20260616/images/fig_inventory.png",
+      "source_size": [
+        800,
+        480
+      ],
+      "output_size": [
+        800,
+        480
+      ],
+      "description": "归档演示界面截图；不代表当前代码重新运行结果"
+    },
+    {
+      "file": "docs/assets/events.jpg",
+      "source": "文档/04-成果制作/答辩PPT/fridge_defense_ppt169_20260616/images/fig_events.png",
+      "source_size": [
+        800,
+        480
+      ],
+      "output_size": [
+        800,
+        480
+      ],
+      "description": "归档演示界面截图；不代表当前代码重新运行结果"
+    },
+    {
+      "file": "docs/assets/label-info.jpg",
+      "source": "文档/04-成果制作/答辩PPT/fridge_defense_ppt169_20260616/images/fig_label.png",
+      "source_size": [
+        800,
+        480
+      ],
+      "output_size": [
+        800,
+        480
+      ],
+      "description": "归档演示界面截图；不代表当前代码重新运行结果"
+    },
+    {
+      "file": "docs/assets/cloud-advice.jpg",
+      "source": "文档/04-成果制作/答辩PPT/fridge_defense_ppt169_20260616/images/fig_cloud.png",
+      "source_size": [
+        800,
+        480
+      ],
+      "output_size": [
+        800,
+        480
+      ],
+      "description": "归档演示界面截图；不代表当前代码重新运行结果"
+    },
+    {
+      "file": "docs/assets/blueberry-full.jpg",
+      "source": "文档/04-成果制作/答辩PPT/fridge_defense_ppt169_20260616/images/fig_blueberry_full.png",
+      "source_size": [
+        800,
+        480
+      ],
+      "output_size": [
+        800,
+        480
+      ],
+      "description": "归档演示界面截图；不代表当前代码重新运行结果"
+    },
+    {
+      "file": "docs/assets/blueberry-half.jpg",
+      "source": "文档/04-成果制作/答辩PPT/fridge_defense_ppt169_20260616/images/fig_blueberry_half.png",
+      "source_size": [
+        800,
+        480
+      ],
+      "output_size": [
+        800,
+        480
+      ],
+      "description": "归档演示界面截图；不代表当前代码重新运行结果"
+    },
+    {
+      "file": "docs/assets/occlusion.jpg",
+      "source": "文档/04-成果制作/答辩PPT/fridge_defense_ppt169_20260616/images/fig_disturb_occlude.png",
+      "source_size": [
+        800,
+        480
+      ],
+      "output_size": [
+        800,
+        480
+      ],
+      "description": "归档演示界面截图；不代表当前代码重新运行结果"
+    }
+  ],
+  "training_metrics": {
+    "source": "training/experiments/fridge_yolov5n_416/results.csv",
+    "row": "epoch 99 (0-based), last of 100 rows",
+    "values": {
+      "metrics/precision": 0.98609,
+      "metrics/recall": 1.0,
+      "metrics/mAP_0.5": 0.99404,
+      "metrics/mAP_0.5:0.95": 0.93207
+    },
+    "scope": "归档自建验证集实验，非新测试，非板端实测；非 best.pt 精度证明"
+  }
+}
