@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Smart Fridge Demo
+Comment=Run RK3566 smart fridge demo with preflight checks
+Exec=bash -lc 'exec /home/ztl/fridge_project/scripts/start_fridge_demo.sh --in-terminal'
+Path=/home/ztl/fridge_project/scripts
+Terminal=true
+Categories=Utility;

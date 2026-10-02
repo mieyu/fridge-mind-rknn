@@ -1,0 +1,41 @@
+# 系统文件
+.DS_Store
+._*
+Thumbs.db
+
+# Python 环境和缓存
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+*.cache
+
+# 本地凭据和运行配置
+.env
+.env.*
+!.env.example
+*.local.json
+
+# 数据集只保留训练配置和类别定义
+training/data/*
+!training/data/datasets/
+training/data/datasets/*
+!training/data/datasets/fridge_food_v1/
+training/data/datasets/fridge_food_v1/*
+!training/data/datasets/fridge_food_v1/fridge_food.yaml
+!training/data/datasets/fridge_food_v1/classes.txt
+
+# 采集日志、预测输出和训练批次图片
+training/logs/
+training/experiments/predict*/
+training/experiments/**/train_batch*.jpg
+training/experiments/**/val_batch*.jpg
+
+# 新生成的训练产物和板端运行数据
+training/artifacts/
+inventory.db
+inventory.db-*
+label_captures/
+tts_cache/
+audio_cache/

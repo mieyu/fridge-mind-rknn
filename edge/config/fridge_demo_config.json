@@ -1,0 +1,110 @@
+{
+  "_说明": "智能冰箱板端演示配置。修改后重新运行 camera_inventory_ui_demo.py 生效。",
+  "blueberry": {
+    "_说明": "蓝莓半盒判断。method=binary_dark 表示对蓝莓ROI灰度二值化，统计暗色面积；method=hsv 表示统计蓝紫色面积；method=hybrid 表示两者取较大值。",
+    "method": "binary_dark",
+    "full_ratio": 0.74,
+    "half_ratio": 0.04,
+    "binary_threshold": 110,
+    "roi_shrink": 0.08,
+    "color_guard_ratio": 0.02,
+    "hsv_lower": [
+      90,
+      35,
+      20
+    ],
+    "hsv_upper": [
+      165,
+      255,
+      255
+    ]
+  },
+  "quality": {
+    "_说明": "低质量画面冻结库存更新，避免遮挡、暗光、模糊导致误出库。",
+    "low_light_mean": 45.0,
+    "low_contrast_std": 12.0,
+    "blur_var_threshold": 18.0
+  },
+  "preprocess": {
+    "_说明": "推理前图像增强，仅影响送入RKNN的图像，不改变UI显示原图。透明塑料薄膜识别差时保持 enabled=true；如果正常物体误检变多，可改成 false。",
+    "enabled": true,
+    "method": "plastic_wrap",
+    "clahe_clip_limit": 1.8,
+    "clahe_tile_grid": 8,
+    "gamma": 0.9,
+    "saturation_gain": 1.15,
+    "contrast_alpha": 1.03,
+    "brightness_beta": 0.0,
+    "sharpen_amount": 0.25,
+    "glare_suppress": true,
+    "glare_v_threshold": 235,
+    "glare_s_threshold": 80,
+    "glare_blur_kernel": 7
+  },
+  "runtime": {
+    "_说明": "稳定计数和推理节奏。画面卡顿可增大 infer_interval；误触发可增大 stable_window/stable_votes。",
+    "stable_window": 10,
+    "stable_votes": 7,
+    "event_cooldown": 2.0,
+    "infer_interval": 8,
+    "conf_threshold": 0.25,
+    "milk_coke_min_margin": 0.12
+  },
+  "camera": {
+    "_说明": "摄像头节点。auto 会扫描 /dev/video*；也可写 /dev/video0、/dev/video18。",
+    "device": "/dev/video18",
+    "width": 640,
+    "height": 480,
+    "fps": 30
+  },
+  "speech": {
+    "_说明": "语音播报。比赛现场如果卡顿或语音异常，可先把 enabled 改成 false。",
+    "enabled": true,
+    "audio_device": "plughw:1,0",
+    "tts_command": "",
+    "wav_dir": "voice_prompts",
+    "wav_map": {
+      "system_ready": "system_ready.wav",
+      "inventory_reset": "inventory_reset.wav",
+      "inventory_initialized": "inventory_initialized.wav",
+      "no_stable_snapshot": "no_stable_snapshot.wav",
+      "camera_quality_bad": "camera_quality_bad.wav",
+      "label_saved": "label_saved.wav",
+      "label_failed": "label_failed.wav",
+      "reminder_saved": "reminder_saved.wav",
+      "assistant_ready": "assistant_ready.wav",
+      "apple_add": "apple_add.wav",
+      "apple_remove": "apple_remove.wav",
+      "banana_add": "banana_add.wav",
+      "banana_remove": "banana_remove.wav",
+      "milk_add": "milk_add.wav",
+      "milk_remove": "milk_remove.wav",
+      "coke_add": "coke_add.wav",
+      "coke_remove": "coke_remove.wav",
+      "egg_add": "egg_add.wav",
+      "egg_remove": "egg_remove.wav",
+      "blueberry_add": "blueberry_add.wav",
+      "blueberry_half": "blueberry_half.wav",
+      "blueberry_remove": "blueberry_remove.wav",
+      "multi_add": "multi_add.wav",
+      "multi_remove": "multi_remove.wav",
+      "inventory_empty": "inventory_empty.wav",
+      "inventory_updated": "inventory_updated.wav",
+      "eat_soon": "eat_soon.wav",
+      "milk_expire_reminder": "milk_expire_reminder.wav",
+      "coke_nutrition_saved": "coke_nutrition_saved.wav",
+      "milk_nutrition_saved": "milk_nutrition_saved.wav"
+    }
+  },
+  "record": {
+    "_说明": "板端 UI 录制。path 为空表示不录制；建议录制时 fps 设 15。",
+    "path": "",
+    "fps": 15.0
+  },
+  "llm": {
+    "_说明": "云端大模型接口，可先留空。建议不要把正式 API Key 写进比赛提交材料。",
+    "api_url": "https://api.deepseek.com/chat/completions",
+    "api_key": "",
+    "model": "deepseek-v4-flash"
+  }
+}

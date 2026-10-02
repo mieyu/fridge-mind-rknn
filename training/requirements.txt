@@ -1,0 +1,6 @@
+# 训练和导出还需安装外部 YOLOv5 源码仓库自己的 requirements.txt。
+PyYAML>=6.0,<7
+numpy<2
+onnx>=1.12,<1.17
+opencv-python>=4.6,<4.11
+# RKNN 转换在独立环境安装与板端 runtime 匹配的官方 rknn-toolkit2 wheel。

@@ -1,0 +1,12 @@
+path: /root/fridge_ai/dataset
+train: images/train
+val: images/val
+
+nc: 6
+names:
+  0: apple
+  1: banana
+  2: milk_box
+  3: coke_can
+  4: egg
+  5: blueberry_box

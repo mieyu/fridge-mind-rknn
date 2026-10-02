@@ -1,0 +1,6 @@
+apple
+banana
+milk_box
+coke_can
+egg
+blueberry_box

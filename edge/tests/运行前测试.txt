@@ -1,0 +1,142 @@
+cd /home/ztl/fridge_project/scripts
+pkill speaker-test 2>/dev/null
+python3 -u camera_inventory_ui_demo.py --camera /dev/video18 --fullscreen --interval 8
+
+
+
+
+
+
+
+组装好板子后，**不要直接开拍**。先做一遍 3 分钟的硬件自检，尤其是音频、摄像头、网络和配置。
+
+**Windows 本地文件位置**
+主脚本：
+
+```text
+E:\研电赛\project\rk3566_fridge_data\scripts\camera_inventory_ui_demo.py
+```
+
+配置文件：
+
+```text
+E:\研电赛\project\rk3566_fridge_data\scripts\fridge_demo_config.json
+```
+
+测试文件：
+
+```text
+E:\研电赛\project\rk3566_fridge_data\scripts\test_camera_inventory_assistant.py
+```
+
+当前配置已确认：
+
+```text
+摄像头：/dev/video18
+音频：plughw:1,0
+模型：deepseek-v4-flash
+API 地址：https://api.deepseek.com/chat/completions
+```
+
+**上板前同步**
+如果你刚改过脚本，先同步：
+
+```powershell
+scp "E:\研电赛\project\rk3566_fridge_data\scripts\camera_inventory_ui_demo.py" ztl@板子IP:/home/ztl/fridge_project/scripts/
+scp "E:\研电赛\project\rk3566_fridge_data\scripts\fridge_demo_config.json" ztl@板子IP:/home/ztl/fridge_project/scripts/
+```
+
+**板子组装后先测这些**
+
+1. 进入目录：
+
+```bash
+cd /home/ztl/fridge_project/scripts
+```
+
+2. 检查 WAV 数量：
+
+```bash
+ls voice_prompts/*.wav | wc -l
+```
+
+正常应为：
+
+```text
+30
+```
+
+3. 初始化 HDMI 音频：
+
+```bash
+amixer -c 1 sset 'ELD Bypass' on
+```
+
+4. 测音频：
+
+```bash
+aplay -D plughw:1,0 voice_prompts/system_ready.wav
+```
+
+如果这一步没声音，不要继续拍，先查小屏 HDMI 音频、音量、线缆。
+
+5. 检查摄像头：
+
+```bash
+ls -l /dev/video18
+```
+
+6. 检查配置：
+
+```bash
+grep -n '"device"\|"audio_device"\|"model"' fridge_demo_config.json
+```
+
+应该看到：
+
+```text
+"device": "/dev/video18"
+"audio_device": "plughw:1,0"
+"model": "deepseek-v4-flash"
+```
+
+7. 如果要展示云分析，设置 key：
+
+```bash
+export FRIDGE_LLM_API_KEY='你的key'
+```
+
+8. 正式运行：
+
+```bash
+python3 -u camera_inventory_ui_demo.py --fullscreen --interval 8
+```
+
+如果要录 UI 视频：
+
+```bash
+python3 -u camera_inventory_ui_demo.py --fullscreen --interval 8 --record demo_part01.avi --record-fps 15
+```
+
+**启动后重点看日志**
+正常应看到：
+
+```text
+[INFO] camera: /dev/video18
+[INFO] llm: enabled
+[INFO] wav prompts: 30
+[SPEAK] 系统就绪
+```
+
+如果看到 `llm: local fallback`，说明没有设置 key 或 key 没传进去。  
+如果又开始遍历 `/dev/video0` 到 `/dev/video17`，说明板端配置文件不是最新版。  
+如果有 `[SPEAK]` 但没声音，先重新跑 `aplay -D plughw:1,0 voice_prompts/system_ready.wav`。
+
+**拍摄前最后一步**
+程序启动后先点一次：
+
+```text
+清空
+```
+
+然后再开始放食材。这样可以避免旧库存、旧标签影响视频展示。
