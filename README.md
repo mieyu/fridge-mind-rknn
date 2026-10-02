@@ -13,7 +13,7 @@
 ![OpenCV](https://img.shields.io/badge/OpenCV-UI-5C3EE8?style=flat&logo=opencv&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-inventory-003B57?style=flat&logo=sqlite&logoColor=white)
 
-[项目简介](#项目简介) · [总体流程](#总体流程) · [功能展示](#功能展示) · [验证集结果](#验证集结果yolov5n416100轮) · [板端部署](#板端部署) · [模型训练](#模型训练) · [项目结构](#项目结构)
+[项目简介](#项目简介) · [总体流程](#总体流程) · [功能展示](#功能展示) · [板端部署](#板端部署) · [模型训练](#模型训练) · [项目结构](#项目结构)
 
 </div>
 
@@ -126,27 +126,6 @@ YOLOv5n 模型经 RKNN 转换后在 NPU 上推理，识别 **苹果、香蕉、�
 
 - **包装信息建档**：在“标签”页选择牛奶或可乐，按 `c` 拍照留档、`s` 保存，记录写入数据库并在库存详情中展示保质期与营养成分；对应食材全部取出后自动清空。
 - **智能助手**：`a` 查询库存、`d` 食用建议、`r` 设置食用提醒；“云分析 / 播报建议 / 语音提问”按钮调用云端大模型，提示词约束其只依据当前库存作答，回答简短、适合播报。
-
-## 验证集结果（YOLOv5n，416，100轮）
-
-| Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
-|:---:|:---:|:---:|:---:|
-| 0.98609 | 1.00000 | 0.99404 | 0.93207 |
-
-数据来自 [`results.csv`](training/experiments/fridge_yolov5n_416/results.csv) 末轮（epoch 99）。
-
-<table>
-  <tr>
-    <td width="55%" align="center">
-      <a href="training/experiments/fridge_yolov5n_416/PR_curve.png"><img src="training/experiments/fridge_yolov5n_416/PR_curve.png" alt="六类食材在验证集上的 Precision-Recall 曲线" width="100%"></a>
-      <br><sub>PR 曲线</sub>
-    </td>
-    <td width="45%" align="center">
-      <a href="training/experiments/fridge_yolov5n_416/confusion_matrix.png"><img src="training/experiments/fridge_yolov5n_416/confusion_matrix.png" alt="六类食材与背景的混淆矩阵" width="100%"></a>
-      <br><sub>混淆矩阵</sub>
-    </td>
-  </tr>
-</table>
 
 ## 硬件组成
 
